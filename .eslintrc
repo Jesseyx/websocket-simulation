@@ -1,0 +1,14 @@
+{
+  "root": true,
+  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "no-console": 0
+  }
+}

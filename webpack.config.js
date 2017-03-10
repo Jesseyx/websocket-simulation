@@ -17,6 +17,9 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "eslint-loader",
+        options: {
+          formatter: require("eslint-friendly-formatter"),
+        },
       },
       {
         test: /\.js$/,
@@ -26,6 +29,10 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        drop_console: true,
+      },
+    }),
   ],
 };
