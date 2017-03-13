@@ -1,12 +1,11 @@
-const EventEmitter = require('events');
 const URL = require('url');
 const http = require('http');
+const Ws = require('../ws');
 
-class WebSocket extends EventEmitter {
+class WebSocket extends Ws {
   constructor(url) {
     super();
 
-    this.socket = null;
     this.options = WebSocket.parseUrl(url);
 
     this.connect();
@@ -39,7 +38,7 @@ class WebSocket extends EventEmitter {
     req.on('upgrade', (res, socket, upgradeHead) => {
       // link success
       this.setSocket(socket);
-      this.handleSuccess(socket);
+      this.handleSuccess();
     });
 
     req.on('error', (e) => {
@@ -49,48 +48,36 @@ class WebSocket extends EventEmitter {
     req.end();
   }
 
-  setSocket(socket) {
-    this.socket = socket;
-  }
-
-  send(data) {
-    this.socket.write(data);
-  }
-
-  handleSuccess(socket) {
-    this.emit('open');
+  handleSuccess() {
     if (this.onopen) {
-      this.onopen();
+      return this.onopen();
     }
 
-    socket.on('data', (data) => {
-      this.handleGetMessage(data);
-    });
-
-    socket.on('close', () => {
-      this.handleClose();
-    });
+    return this.emit('open');
   }
 
   handleError(e) {
     if (this.onerror) {
       return this.onerror(e);
     }
-    this.emit('error', e);
+
+    return super.handleError(e);
   }
 
   handleGetMessage(data) {
-    this.emit('message', data);
     if (this.onmessage) {
-      this.onmessage(data);
+      return this.onmessage(data);
     }
+
+    return super.handleGetMessage(data);
   }
 
   handleClose() {
-    this.emit('close');
     if (this.onclose) {
-      this.onclose();
+      return this.onclose();
     }
+
+    return super.handleClose();
   }
 }
 
