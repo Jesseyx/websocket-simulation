@@ -27,7 +27,7 @@ class Ws extends EventEmitter {
   }
 
   send(data) {
-    this.socket.write(data);
+    this.socket.write(JSON.stringify(data));
   }
 
   close() {
@@ -43,7 +43,7 @@ class Ws extends EventEmitter {
   }
 
   handleGetMessage(data) {
-    this.emit('message', data);
+    this.emit('message', JSON.parse(data));
   }
 
   handleClose() {

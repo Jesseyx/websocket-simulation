@@ -22,7 +22,7 @@ class WebSocket extends Ws {
   }
 
   connect() {
-    const key = new Buffer(this.options.protocolVersion + '-' + Date.now()).toString('base64');
+    const key = new Buffer(`${this.options.protocolVersion}-${Date.now()}`).toString('base64');
 
     const options = {
       port: this.options.port,
@@ -40,7 +40,7 @@ class WebSocket extends Ws {
     req.on('upgrade', (res, socket) => {
       const shasum = crypto.createHash('sha1');
       const selfAcceptKey = shasum.update(key + constants.GUID).digest('base64');
-      const acceptKey = res.headers['sec-webSocket-accept'];
+      const acceptKey = res.headers['sec-websocket-accept'];
 
       if (acceptKey !== selfAcceptKey) {
         this.handleError(new Error('Key is not matched'));

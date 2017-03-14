@@ -22,7 +22,7 @@ class Server extends EventEmitter {
         'HTTP/1.1 101 Switching Protocols',
         'Upgrade: websocket',
         'Connection: upgrade',
-        'Sec-WebSocket-Accept: ' + key,
+        `Sec-WebSocket-Accept: ${key}`,
       ];
 
       const ws = new Ws();

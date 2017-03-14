@@ -4,21 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "lint": "eslint --ext .js src"
+    "lint": "eslint --ext .js src",
+    "test": "mocha"
   },
   "author": "Jesseyx",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
-    "babel-loader": "^6.4.0",
-    "babel-preset-env": "^1.2.1",
     "eslint": "^3.17.1",
     "eslint-config-airbnb-base": "^11.1.1",
-    "eslint-friendly-formatter": "^2.0.7",
-    "eslint-loader": "^1.6.3",
     "eslint-plugin-import": "^2.2.0",
-    "webpack": "^2.2.1"
+    "mocha": "^3.2.0",
+    "should": "^11.2.1"
   }
 }
