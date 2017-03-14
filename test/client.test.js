@@ -1,7 +1,7 @@
 const http = require('http');
 const should = require('should');
-const WebSocket = require('../src/client');
-const ioServer = require('../src/server');
+const WebSocket = require('../lib/client');
+const ioServer = require('../lib/server');
 
 describe('Client', () => {
   describe('Client test in no server', () => {

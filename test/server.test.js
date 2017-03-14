@@ -1,7 +1,7 @@
 const http = require('http');
 const should = require('should');
-const WebSocket = require('../src/client');
-const ioServer = require('../src/server');
+const WebSocket = require('../lib/client');
+const ioServer = require('../lib/server');
 
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
