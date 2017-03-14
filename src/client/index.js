@@ -1,5 +1,7 @@
 const URL = require('url');
 const http = require('http');
+const crypto = require('crypto');
+const constants = require('../constants');
 const Ws = require('../ws');
 
 class WebSocket extends Ws {
@@ -35,7 +37,15 @@ class WebSocket extends Ws {
 
     const req = http.request(options);
 
-    req.on('upgrade', (res, socket, upgradeHead) => {
+    req.on('upgrade', (res, socket) => {
+      const shasum = crypto.createHash('sha1');
+      const selfAcceptKey = shasum.update(key + constants.GUID).digest('base64');
+      const acceptKey = res.headers['sec-webSocket-accept'];
+
+      if (acceptKey !== selfAcceptKey) {
+        this.handleError(new Error('Key is not matched'));
+      }
+
       // link success
       this.setSocket(socket);
       this.handleSuccess();
